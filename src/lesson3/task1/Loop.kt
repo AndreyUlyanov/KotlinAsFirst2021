@@ -77,11 +77,14 @@ fun digitNumber(n: Int): Int {
     var number = n
     if (number == 0 || number == 1) counter = 1
     else {
-        while (number > 0) {
-            counter += 1
-            number /= 10
+        if (number > 2) {
+            while (number > 0) {
+                counter += 1
+                number /= 10
+            }
         }
     }
+
     return counter
 }
 
@@ -237,6 +240,7 @@ fun squareSequenceDigit(n: Int): Int {
     var counter2: Int = 9
     var counter3: Int = 31
     var counter4: Int = 99
+    var counter5: Int = 316
     when (number) {
         in 1..3 -> {
             ordinal = number * number
@@ -292,6 +296,24 @@ fun squareSequenceDigit(n: Int): Int {
             } else if (sequenceLength - number == 3) {
                 counter4 * counter4 % 10000 / 1000
             } else counter4 * counter4 % 100000 / 10000
+        }
+        in 849..4098 -> {
+            sequenceLength = 848
+            while (sequenceLength < number) {
+                sequenceLength += 6
+                counter5 += 1
+            }
+            ordinal = if (sequenceLength == number) {
+                counter5 * counter5 % 10
+            } else if (sequenceLength - number == 1) {
+                counter5 * counter5 % 100 / 10
+            } else if (sequenceLength - number == 2) {
+                counter5 * counter5 % 1000 / 100
+            } else if (sequenceLength - number == 3) {
+                counter5 * counter5 % 10000 / 1000
+            } else if (sequenceLength - number == 4) {
+                counter5 * counter5 % 100000 / 10000
+            } else counter5 * counter5 % 1000000 / 100000
         }
     }
     return ordinal
