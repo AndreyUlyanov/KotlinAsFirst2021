@@ -75,7 +75,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var counter = 0
     var number = n
-    if (number == 0) counter = 1
+    if (number == 0 || number == 1) counter = 1
     else {
         while (number > 0) {
             counter += 1
@@ -101,9 +101,10 @@ fun fib(n: Int): Int = TODO()
 
 fun minDivisor(n: Int): Int {
     var divider = 1
-    for (i in n downTo 2) {
+    for (i in 2..n) {
         if (n % i == 0) {
             divider = i
+            break
         } else continue
     }
     return divider
@@ -235,6 +236,7 @@ fun squareSequenceDigit(n: Int): Int {
     var counter1: Int = 3
     var counter2: Int = 9
     var counter3: Int = 31
+    var counter4: Int = 99
     when (number) {
         in 1..3 -> {
             ordinal = number * number
@@ -274,6 +276,22 @@ fun squareSequenceDigit(n: Int): Int {
             } else if (sequenceLength - number == 2) {
                 counter3 * counter3 % 1000 / 100
             } else counter3 * counter3 % 10000 / 1000
+        }
+        in 354..848 -> {
+            sequenceLength = 353
+            while (sequenceLength < number) {
+                sequenceLength += 5
+                counter4 += 1
+            }
+            ordinal = if (sequenceLength == number) {
+                counter4 * counter4 % 10
+            } else if (sequenceLength - number == 1) {
+                counter4 * counter4 % 100 / 10
+            } else if (sequenceLength - number == 2) {
+                counter4 * counter4 % 1000 / 100
+            } else if (sequenceLength - number == 3) {
+                counter4 * counter4 % 10000 / 1000
+            } else counter4 * counter4 % 100000 / 10000
         }
     }
     return ordinal
