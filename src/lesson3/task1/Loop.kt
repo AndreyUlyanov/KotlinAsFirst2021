@@ -72,7 +72,18 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var counter = 0
+    var number = n
+    if (number == 0) counter = 1
+    else {
+        while (number > 0) {
+            counter += 1
+            number /= 10
+        }
+    }
+    return counter
+}
 
 /**
  * Простая (2 балла)
@@ -87,14 +98,31 @@ fun fib(n: Int): Int = TODO()
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+
+fun minDivisor(n: Int): Int {
+    var divider = 1
+    for (i in n downTo 2) {
+        if (n % i == 0) {
+            divider = i
+        } else continue
+    }
+    return divider
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var divider = 1
+    for (i in 1 until n) {
+        if (n % i == 0) {
+            divider = i
+        } else continue
+    }
+    return divider
+}
 
 /**
  * Простая (2 балла)
@@ -138,7 +166,15 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var sequence = 0
+    var digit: Int = n
+    while (digit > 0) {
+        sequence = sequence * 10 + digit % 10
+        digit /= 10
+    }
+    return sequence
+}
 
 /**
  * Средняя (3 балла)
@@ -192,7 +228,56 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var ordinal: Int = 0
+    val number: Int = n
+    var sequenceLength: Int = 0
+    var counter1: Int = 3
+    var counter2: Int = 9
+    var counter3: Int = 31
+    when (number) {
+        in 1..3 -> {
+            ordinal = number * number
+        }
+        in 4..15 -> {
+            sequenceLength = 3
+            while (sequenceLength < number) {
+                sequenceLength += 2
+                counter1 += 1
+            }
+            ordinal = if (sequenceLength == number) {
+                counter1 * counter1 % 10
+            } else counter1 * counter1 % 100 / 10
+        }
+        in 16..81 -> {
+            sequenceLength = 15
+            while (sequenceLength < number) {
+                sequenceLength += 3
+                counter2 += 1
+            }
+            ordinal = if (sequenceLength == number) {
+                counter2 * counter2 % 10
+            } else if (sequenceLength - number == 1) {
+                counter2 * counter2 % 100 / 10
+            } else counter2 * counter2 % 1000 / 100
+        }
+        in 82..353 -> {
+            sequenceLength = 81
+            while (sequenceLength < number) {
+                sequenceLength += 4
+                counter3 += 1
+            }
+            ordinal = if (sequenceLength == number) {
+                counter3 * counter3 % 10
+            } else if (sequenceLength - number == 1) {
+                counter3 * counter3 % 100 / 10
+            } else if (sequenceLength - number == 2) {
+                counter3 * counter3 % 1000 / 100
+            } else counter3 * counter3 % 10000 / 1000
+        }
+    }
+    return ordinal
+}
 
 /**
  * Сложная (5 баллов)
