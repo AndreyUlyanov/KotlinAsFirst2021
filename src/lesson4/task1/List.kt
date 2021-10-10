@@ -137,7 +137,23 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    var arithmetic = 0.0
+    var summ = 0.0
+    var coutner = 0.0
+    for (i in 0 until list.size) {
+        val element = list[i]
+        summ += element
+        coutner += 1
+    }
+    arithmetic = summ / coutner
+    for (i in 0 until list.size) {
+        val element = list[i]
+        list[i] = element - arithmetic
+    }
+    return list
+}
+
 
 /**
  * Средняя (3 балла)
@@ -250,4 +266,259 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var number = ""
+    val hundredsThousand = n / 100000
+    val extraTensThousand = n % 100000 / 1000
+    val tensThousands = n % 100000 / 10000
+    val unitsThousands = n % 10000 / 1000
+    val hundreds = n % 1000 / 100
+    val tens = n % 100 / 10
+    val units = n % 10
+    val extraTens = n % 100
+    if ((hundredsThousand != 0) && (n in 1000..999999)) {
+        when (hundredsThousand) {
+            9 -> {
+                number += "девятьсот"
+            }
+            8 -> {
+                number += "восемьсот"
+            }
+            7 -> {
+                number += "семьсот"
+            }
+            6 -> {
+                number += "шестьсот"
+            }
+            5 -> {
+                number += "пятьсот"
+            }
+            4 -> {
+                number += "четыреста"
+            }
+            3 -> {
+                number += "триста"
+            }
+            2 -> {
+                number += "двести"
+            }
+            else -> number += "сто"
+        }
+        number += " "
+    }
+    if ((extraTensThousand in 10..19) && (n in 1000..999999)) {
+        when (extraTensThousand) {
+            10 -> {
+                number += "десять"
+            }
+            11 -> {
+                number += "одиннадцать"
+            }
+            12 -> {
+                number += "двенадцать"
+            }
+            13 -> {
+                number += "тринадцать"
+            }
+            14 -> {
+                number += "четырнадцать"
+            }
+            15 -> {
+                number += "пятнадцать"
+            }
+            16 -> {
+                number += "шестнадцать"
+            }
+            17 -> {
+                number += "семнадцать"
+            }
+            18 -> {
+                number += "восемнадцать"
+            }
+            else -> number += "девятнадцать"
+        }
+        number += (" тысяч")
+    } else {
+        if ((tensThousands != 0) && (n in 1000..999999)) {
+            when (tensThousands) {
+                2 -> {
+                    number += "двадцать"
+                }
+                3 -> {
+                    number += "тридцать"
+                }
+                4 -> {
+                    number += "сорок"
+                }
+                5 -> {
+                    number += "пятьдесят"
+                }
+                6 -> {
+                    number += "шестьдесят"
+                }
+                7 -> {
+                    number += "семьдесят"
+                }
+                8 -> {
+                    number += "восемьдесят"
+                }
+                else -> number += "девяносто"
+            }
+            number += " "
+        }
+        if (n in 1000..999999) {
+            when (unitsThousands) {
+                1 -> {
+                    number += "одна тысяча"
+                }
+                2 -> {
+                    number += "две тысячи"
+                }
+                3 -> {
+                    number += "три тысячи"
+                }
+                4 -> {
+                    number += "четыре тысячи"
+                }
+                5 -> {
+                    number += "пять тысяч"
+                }
+                6 -> {
+                    number += "шесть тысяч"
+                }
+                7 -> {
+                    number += "семь тысяч"
+                }
+                8 -> {
+                    number += "восемь тысяч"
+                }
+                9 -> {
+                    number += "девять тысяч"
+                }
+                else -> number += "тысяч"
+            }
+        }
+    }
+    if ((hundreds != 0 || tens != 0 || units != 0) && n >= 1000)
+        number += " "
+    if (hundreds != 0) {
+        when (hundreds) {
+            9 -> {
+                number += "девятьсот"
+            }
+            8 -> {
+                number += "восемьсот"
+            }
+            7 -> {
+                number += "семьсот"
+            }
+            6 -> {
+                number += "шестьсот"
+            }
+            5 -> {
+                number += "пятьсот"
+            }
+            4 -> {
+                number += "четыреста"
+            }
+            3 -> {
+                number += "триста"
+            }
+            2 -> {
+                number += "двести"
+            }
+            else -> number += "сто"
+        }
+        number += " "
+    }
+    if (extraTens in 10..19) {
+        when (extraTens) {
+            10 -> {
+                number += "десять"
+            }
+            11 -> {
+                number += "одиннадцать"
+            }
+            12 -> {
+                number += "двенадцать"
+            }
+            13 -> {
+                number += "тринадцать"
+            }
+            14 -> {
+                number += "четырнадцать"
+            }
+            15 -> {
+                number += "пятнадцать"
+            }
+            16 -> {
+                number += "шестнадцать"
+            }
+            17 -> {
+                number += "семнадцать"
+            }
+            18 -> {
+                number += "восемнадцать"
+            }
+            else -> number += "девятнадцать"
+        }
+    } else {
+        if (tens != 0) {
+            when (tens) {
+                2 -> {
+                    number += "двадцать"
+                }
+                3 -> {
+                    number += "тридцать"
+                }
+                4 -> {
+                    number += "сорок"
+                }
+                5 -> {
+                    number += "пятьдесят"
+                }
+                6 -> {
+                    number += "шестьдесят"
+                }
+                7 -> {
+                    number += "семьдесят"
+                }
+                8 -> {
+                    number += "восемьдесят"
+                }
+                else -> number += "девяносто"
+            }
+            number += " "
+        }
+        if (units != 0) {
+            when (units) {
+                1 -> {
+                    number += "один"
+                }
+                2 -> {
+                    number += "два"
+                }
+                3 -> {
+                    number += "три"
+                }
+                4 -> {
+                    number += "четыре"
+                }
+                5 -> {
+                    number += "пять"
+                }
+                6 -> {
+                    number += "шесть"
+                }
+                7 -> {
+                    number += "семь"
+                }
+                8 -> {
+                    number += "восемь"
+                }
+                else -> number += "девять"
+            }
+        }
+    }
+    return (number)
+}
