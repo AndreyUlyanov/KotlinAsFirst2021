@@ -488,7 +488,8 @@ fun russian(n: Int): String {
                 }
                 else -> number += "девяносто"
             }
-            number += " "
+            if (units != 0)
+                number += " "
         }
         if (units != 0) {
             when (units) {
