@@ -4,6 +4,8 @@ package lesson2.task2
 
 import lesson1.task1.sqr
 import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -41,13 +43,14 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    return if (month == 2) {
-        if (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0)) {
-            29
-        } else 28
-    } else if ((month == 1) || (month == 3) || (month == 5) || (month == 7) || (month == 8) || (month == 10) || (month == 12)) {
-        31
-    } else 30
+    return when (month) {
+        1, 3, 5, 7, 8, 10, 12 -> 31
+        2 -> when {
+            year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) -> 29
+            else -> 28
+        }
+        else -> 30
+    }
 }
 
 /**
@@ -73,4 +76,4 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean =
-    (a <= r && b <= s) || (a <= r && c <= s) || (b <= r && a <= s) || (b <= r && c <= s) || (c <= r && a <= s) || (c <= r && b <= s)
+    (min(a, b) <= min(r, s)) && (min(b, c) <= max(r, s)) || (min(a, b) <= max(r, s)) && (min(b, c) <= min(r, s))

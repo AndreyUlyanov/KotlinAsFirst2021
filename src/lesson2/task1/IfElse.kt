@@ -5,6 +5,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 // Урок 2: ветвления (здесь), логический тип (см. 2.2).
@@ -94,9 +95,11 @@ fun timeForHalfWay(
     t3: Double, v3: Double
 ): Double {
     val halfway: Double = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    if (t1 * v1 > halfway) return halfway / v1
-    return if (t1 * v1 + t2 * v2 > halfway) t1 + (halfway - t1 * v1) / v2
-    else t1 + t2 + (halfway - t1 * v1 - t2 * v2) / v3
+    return when {
+        t1 * v1 > halfway -> halfway / v1
+        t1 * v1 + t2 * v2 > halfway -> t1 + (halfway - t1 * v1) / v2
+        else -> t1 + t2 + (halfway - t1 * v1 - t2 * v2) / v3
+    }
 }
 
 /**
@@ -113,13 +116,20 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    return if (((kingX == rookX1) || (kingY == rookY1)) && (kingX != rookX2) && (kingY != rookY2)) {
-        1
-    } else if (((kingX == rookX2) || (kingY == rookY2)) && ((kingX != rookX1) && (kingY != rookY1))) {
-        2
-    } else if (((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2))) {
-        3
-    } else 0
+    val menace2: Int = when {
+        (kingX == rookX2) || (kingY == rookY2) -> 1
+        else -> 0
+    }
+    val menace1: Int = when {
+        (kingX == rookX1) || (kingY == rookY1) -> 1
+        else -> 0
+    }
+    return when {
+        (menace1 == 1) && (menace2 == 0) -> 1
+        (menace1 == 0) && (menace2 == 1) -> 2
+        (menace1 == 1) && (menace2 == 1) -> 3
+        else -> 0
+    }
 }
 
 /**
@@ -189,25 +199,20 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if ((a < b) && (b < c) && (c <= d)) {
-        return -1
-    } else if (b == a && b == c && b == d) {
-        return 0
-    } else if (a < b && c <= d) {
-        return -1
-    } else if (b == a && c <= d) {
-        return -1
-    } else if ((c < d) && (d < a) && (a <= b)) {
-        return -1
-    } else if (d == c && b <= a) {
-        return -1
-    } else if (b in c..d && a !in c..d && b != c && a < c) {
-        return b - c
-    } else if (c in a..b && d in a..b && c > a && d < b) {
-        return d - c
-    } else if (a in c..d && b in c..d && a > c && b < d) {
-        return b - a
-    } else if (a in c..d && b !in c..d && a > c && d < b) {
-        return d - a
+    if (a == b && b == c && c == d) return 0
+    else if (a == min(min(min(a, b), c), d)) {
+        return when {
+            b < c -> -1
+            d !in a..b && c in a..b -> b - c
+            d in a..b && c in a..b -> d - c
+            else -> 0
+        }
+    } else if (c == min(min(min(a, b), c), d)) {
+        return when {
+            d < a -> -1
+            b !in c..d && a in c..d -> d - a
+            b in c..d && a in c..d -> b - a
+            else -> 0
+        }
     } else return -1
 }
