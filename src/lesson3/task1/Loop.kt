@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -73,18 +76,12 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var counter = 0
+    var counter = 1
     var number = n
-    if (number == 0 || number == 1) counter = 1
-    else {
-        if (number > 2) {
-            while (number > 0) {
-                counter += 1
-                number /= 10
-            }
-        }
+    while (number > 9) {
+        number /= 10
+        counter += 1
     }
-
     return counter
 }
 
@@ -103,8 +100,8 @@ fun fib(n: Int): Int = TODO()
  */
 
 fun minDivisor(n: Int): Int {
-    var divider = 1
-    for (i in 2..n) {
+    var divider = n
+    for (i in 2..sqrt(n.toDouble()).toInt() + 1) {
         if (n % i == 0) {
             divider = i
             break
@@ -120,7 +117,7 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var divider = 1
-    for (i in 1 until n) {
+    for (i in sqrt(n.toDouble()).toInt() - 1 until n) {
         if (n % i == 0) {
             divider = i
         } else continue
@@ -210,7 +207,20 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var newEntry: Double
+    var digit = 2
+    var result = 0.0
+    var n = 1
+    val y = x % (2 * PI)
+    do {
+        newEntry = (-1.0).pow(digit) * y.pow(n) / factorial(n)
+        digit++
+        n += 2
+        result += newEntry
+    } while (abs(newEntry) > eps)
+    return result
+}
 
 /**
  * Средняя (4 балла)
@@ -221,7 +231,20 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    var newEntry: Double
+    var digit = 2
+    var result = 0.0
+    var n = 0
+    val y = x % (2 * PI)
+    do {
+        newEntry = (-1.0).pow(digit) * y.pow(n) / factorial(n)
+        digit++
+        n += 2
+        result += newEntry
+    } while (abs(newEntry) > eps)
+    return result
+}
 
 /**
  * Сложная (4 балла)
@@ -233,90 +256,20 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var ordinal: Int = 0
-    val number: Int = n
-    var sequenceLength: Int = 0
-    var counter1: Int = 3
-    var counter2: Int = 9
-    var counter3: Int = 31
-    var counter4: Int = 99
-    var counter5: Int = 316
-    when (number) {
-        in 1..3 -> {
-            ordinal = number * number
-        }
-        in 4..15 -> {
-            sequenceLength = 3
-            while (sequenceLength < number) {
-                sequenceLength += 2
-                counter1 += 1
+    var result = 0
+    var sqr: Int
+    var count = 0
+    while (count < n) {
+        for (i in 1..n) {
+            sqr = i * i
+            count += digitNumber(sqr)
+            if (count >= n) {
+                result = (sqr / 10.0.pow(count - n) % 10).toInt()
+                break
             }
-            ordinal = if (sequenceLength == number) {
-                counter1 * counter1 % 10
-            } else counter1 * counter1 % 100 / 10
-        }
-        in 16..81 -> {
-            sequenceLength = 15
-            while (sequenceLength < number) {
-                sequenceLength += 3
-                counter2 += 1
-            }
-            ordinal = if (sequenceLength == number) {
-                counter2 * counter2 % 10
-            } else if (sequenceLength - number == 1) {
-                counter2 * counter2 % 100 / 10
-            } else counter2 * counter2 % 1000 / 100
-        }
-        in 82..353 -> {
-            sequenceLength = 81
-            while (sequenceLength < number) {
-                sequenceLength += 4
-                counter3 += 1
-            }
-            ordinal = if (sequenceLength == number) {
-                counter3 * counter3 % 10
-            } else if (sequenceLength - number == 1) {
-                counter3 * counter3 % 100 / 10
-            } else if (sequenceLength - number == 2) {
-                counter3 * counter3 % 1000 / 100
-            } else counter3 * counter3 % 10000 / 1000
-        }
-        in 354..848 -> {
-            sequenceLength = 353
-            while (sequenceLength < number) {
-                sequenceLength += 5
-                counter4 += 1
-            }
-            ordinal = if (sequenceLength == number) {
-                counter4 * counter4 % 10
-            } else if (sequenceLength - number == 1) {
-                counter4 * counter4 % 100 / 10
-            } else if (sequenceLength - number == 2) {
-                counter4 * counter4 % 1000 / 100
-            } else if (sequenceLength - number == 3) {
-                counter4 * counter4 % 10000 / 1000
-            } else counter4 * counter4 % 100000 / 10000
-        }
-        in 849..4098 -> {
-            sequenceLength = 848
-            while (sequenceLength < number) {
-                sequenceLength += 6
-                counter5 += 1
-            }
-            ordinal = if (sequenceLength == number) {
-                counter5 * counter5 % 10
-            } else if (sequenceLength - number == 1) {
-                counter5 * counter5 % 100 / 10
-            } else if (sequenceLength - number == 2) {
-                counter5 * counter5 % 1000 / 100
-            } else if (sequenceLength - number == 3) {
-                counter5 * counter5 % 10000 / 1000
-            } else if (sequenceLength - number == 4) {
-                counter5 * counter5 % 100000 / 10000
-            } else counter5 * counter5 % 1000000 / 100000
         }
     }
-    return ordinal
+    return result
 }
 
 /**
