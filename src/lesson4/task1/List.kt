@@ -328,7 +328,6 @@ fun russian(n: Int): String {
             }
             if ((i / 10 % 10 != 0) || (i % 10 != 0)) number.append(" ") else {
                 if (i == thousands) number.append(" тысяч")
-                if (notThousands != 0) number.append(" ")
             }
         }
         count -= 1
@@ -364,10 +363,7 @@ fun russian(n: Int): String {
                 }
                 else -> number.append("девятнадцать")
             }
-            if (thousands != 0) {
-                number.append(" тысяч")
-                if (notThousands != 0) number.append(" ")
-            }
+            if (thousands != 0) number.append(" тысяч")
             count -= 2
         } else {
             iTens = i % 100 / 10
@@ -434,7 +430,6 @@ fun russian(n: Int): String {
                         }
                         else -> number.append("тысяч")
                     }
-                    if (notThousands != 0) number.append(" ")
                 } else {
                     when (iUnits) {
                         1 -> {
@@ -467,6 +462,7 @@ fun russian(n: Int): String {
             }
             count -= 1
         }
+        if ((i == thousands) && (notThousands != 0)) number.append(" ")
         thousands = 0
     }
     return number.toString()
