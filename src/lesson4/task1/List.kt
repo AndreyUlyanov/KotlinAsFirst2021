@@ -248,7 +248,29 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    val numberResult = StringBuilder()
+    numberResult.append("M".repeat(n / 1000))
+    when (n % 1000 / 100) {
+        1, 2, 3 -> numberResult.append("C".repeat(n % 1000 / 100))
+        4 -> numberResult.append("CD")
+        5, 6, 7, 8 -> numberResult.append("D").append("C".repeat((n % 1000 / 100) - 5))
+        9 -> numberResult.append("CM")
+    }
+    when (n % 100 / 10) {
+        1, 2, 3 -> numberResult.append("X".repeat(n % 100 / 10))
+        4 -> numberResult.append("XL")
+        5, 6, 7, 8 -> numberResult.append("L").append("X".repeat((n % 100 / 10) - 5))
+        9 -> numberResult.append("XC")
+    }
+    when (n % 10) {
+        1 -> numberResult.append("I".repeat(n % 10))
+        4 -> numberResult.append("IV")
+        5, 6, 7, 8 -> numberResult.append("V").append("I".repeat((n % 10) - 5))
+        9 -> numberResult.append("IX")
+    }
+    return numberResult.toString()
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -305,7 +327,7 @@ fun russian(n: Int): String {
                 else -> number.append("сто")
             }
             if ((i / 10 % 10 != 0) || (i % 10 != 0)) number.append(" ") else {
-                number.append(" тысяч")
+                if (i == thousands) number.append(" тысяч")
                 if (notThousands != 0) number.append(" ")
             }
         }
@@ -446,8 +468,4 @@ fun russian(n: Int): String {
         thousands = 0
     }
     return number.toString()
-}
-
-fun main() {
-    print(123 % 100 / 10)
 }
