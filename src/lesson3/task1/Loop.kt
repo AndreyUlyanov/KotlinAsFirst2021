@@ -90,15 +90,15 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var x = 1
-    var y = 1
+    var lastFib = 1
+    var nextFib = 1
     var i = 2
     while (i < n) {
-        y += x
-        x = y - x
+        nextFib += lastFib
+        lastFib = nextFib - lastFib
         i += 1
     }
-    return y
+    return nextFib
 }
 
 
@@ -239,9 +239,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int {
-    return 5
-}
+fun squareSequenceDigit(n: Int): Int = TODO()
 
 /**
  * Сложная (5 баллов)
