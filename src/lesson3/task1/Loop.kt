@@ -2,7 +2,10 @@
 
 package lesson3.task1
 
-import kotlin.math.*
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -88,7 +91,19 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    return when (n) {
+        0 -> {
+            0
+        }
+        1 -> {
+            1
+        }
+        else -> {
+            fib(n - 1) + fib(n - 2)
+        }
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -205,20 +220,7 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double {
-    var newEntry: Double
-    var digit = 2
-    var result = 0.0
-    var n = 1
-    val y = x % (2 * PI)
-    do {
-        newEntry = (-1.0).pow(digit) * y.pow(n) / factorial(n)
-        digit += 1
-        n += 2
-        result += newEntry
-    } while (abs(newEntry) > eps)
-    return result
-}
+fun sin(x: Double, eps: Double): Double = TODO()
 
 /**
  * Средняя (4 балла)
@@ -229,20 +231,7 @@ fun sin(x: Double, eps: Double): Double {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double {
-    var newEntry: Double
-    var digit = 2
-    var result = 0.0
-    var n = 0
-    val y = x % (2 * PI)
-    do {
-        newEntry = (-1.0).pow(digit) * y.pow(n) / factorial(n)
-        digit += 1
-        n += 2
-        result += newEntry
-    } while (abs(newEntry) > eps)
-    return result
-}
+fun cos(x: Double, eps: Double): Double = TODO()
 
 /**
  * Сложная (4 балла)
