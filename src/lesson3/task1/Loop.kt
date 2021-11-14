@@ -2,10 +2,7 @@
 
 package lesson3.task1
 
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -77,7 +74,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  */
 fun digitNumber(n: Int): Int {
     var counter = 1
-    var number = n
+    var number = abs(n)
     while (number > 9) {
         number /= 10
         counter += 1
@@ -117,9 +114,10 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     var divider = 1
-    for (i in sqrt(n.toDouble()).toInt() - 1 until n) {
+    for (i in n - 1 downTo sqrt(n.toDouble()).roundToInt()) {
         if (n % i == 0) {
             divider = i
+            break
         } else continue
     }
     return divider
