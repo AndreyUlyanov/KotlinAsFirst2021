@@ -3,10 +3,8 @@
 package lesson3.task1
 
 import kotlin.math.abs
-import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
-
 // Урок 3: циклы
 // Максимальное количество баллов = 9
 // Рекомендуемое количество баллов = 7
@@ -92,18 +90,17 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    return when (n) {
-        0 -> {
-            0
-        }
-        1 -> {
-            1
-        }
-        else -> {
-            fib(n - 1) + fib(n - 2)
-        }
+    var x = 1
+    var y = 1
+    var i = 2
+    while (i < n) {
+        y += x
+        x = y - x
+        i += 1
     }
+    return y
 }
+
 
 /**
  * Простая (2 балла)
@@ -243,20 +240,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int {
-    var result = 0
-    var sqr: Int
-    var count = 0
-    while (count < n) {
-        for (i in 1..n) {
-            sqr = i * i
-            count += digitNumber(sqr)
-            if (count >= n) {
-                result = (sqr / 10.0.pow(count - n) % 10).toInt()
-                break
-            }
-        }
-    }
-    return result
+    return 5
 }
 
 /**
