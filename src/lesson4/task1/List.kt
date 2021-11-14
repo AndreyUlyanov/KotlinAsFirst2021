@@ -264,7 +264,7 @@ fun roman(n: Int): String {
         9 -> numberResult.append("XC")
     }
     when (n % 10) {
-        1 -> numberResult.append("I".repeat(n % 10))
+        1, 2, 3 -> numberResult.append("I".repeat(n % 10))
         4 -> numberResult.append("IV")
         5, 6, 7, 8 -> numberResult.append("V").append("I".repeat((n % 10) - 5))
         9 -> numberResult.append("IX")
@@ -396,7 +396,9 @@ fun russian(n: Int): String {
                     }
                     else -> number.append("девяносто")
                 }
-                if (i % 10 != 0) number.append(" ")
+                if (i % 10 != 0) number.append(" ") else {
+                    if ((i == thousands) && (i % 10 == 0)) number.append(" тысяч")
+                }
             }
             count -= 1
             iUnits = i % 10
