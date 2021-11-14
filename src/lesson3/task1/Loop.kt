@@ -215,7 +215,7 @@ fun sin(x: Double, eps: Double): Double {
     val y = x % (2 * PI)
     do {
         newEntry = (-1.0).pow(digit) * y.pow(n) / factorial(n)
-        digit++
+        digit += 1
         n += 2
         result += newEntry
     } while (abs(newEntry) > eps)
@@ -239,7 +239,7 @@ fun cos(x: Double, eps: Double): Double {
     val y = x % (2 * PI)
     do {
         newEntry = (-1.0).pow(digit) * y.pow(n) / factorial(n)
-        digit++
+        digit += 1
         n += 2
         result += newEntry
     } while (abs(newEntry) > eps)

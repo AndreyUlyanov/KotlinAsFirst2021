@@ -138,21 +138,12 @@ fun mean(list: List<Double>): Double = TODO()
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
-    var arithmetic = 0.0
-    var summ = 0.0
-    var coutner = 0.0
-    for (i in 0 until list.size) {
-        val element = list[i]
-        summ += element
-        coutner += 1
-    }
-    arithmetic = summ / coutner
-    for (i in 0 until list.size) {
-        val element = list[i]
-        list[i] = element - arithmetic
-    }
+    var arithmetic = list.sum() / list.size
+    for (i in 0 until list.size) list[i] -= arithmetic
     return list
 }
+// как изменить элемент, если идти по элементу, а не индексу?
+// for (element in list) element -= arithmetic не подходит ведь.
 
 
 /**
@@ -267,259 +258,196 @@ fun roman(n: Int): String = TODO()
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var number = ""
-    val hundredsThousand = n / 100000
-    val extraTensThousand = n % 100000 / 1000
-    val tensThousands = n % 100000 / 10000
-    val unitsThousands = n % 10000 / 1000
-    val hundreds = n % 1000 / 100
-    val tens = n % 100 / 10
-    val units = n % 10
-    val extraTens = n % 100
-    if ((hundredsThousand != 0) && (n in 1000..999999)) {
-        when (hundredsThousand) {
-            9 -> {
-                number += "девятьсот"
-            }
-            8 -> {
-                number += "восемьсот"
-            }
-            7 -> {
-                number += "семьсот"
-            }
-            6 -> {
-                number += "шестьсот"
-            }
-            5 -> {
-                number += "пятьсот"
-            }
-            4 -> {
-                number += "четыреста"
-            }
-            3 -> {
-                number += "триста"
-            }
-            2 -> {
-                number += "двести"
-            }
-            else -> number += "сто"
-        }
-        number += " "
+    var thousands = n / 1000
+    val notThousands = n % 1000
+    val number = StringBuilder()
+    var i = 1
+    var iHundreds: Int
+    var iTens: Int
+    var iUnits: Int
+    var count: Int = when (n) {
+        in 1..9 -> 1
+        in 10..99 -> 2
+        in 100..999 -> 3
+        in 1000..9999 -> 4
+        in 10000..99999 -> 5
+        else -> 6
     }
-    if ((extraTensThousand in 10..19) && (n in 1000..999999)) {
-        when (extraTensThousand) {
-            10 -> {
-                number += "десять"
-            }
-            11 -> {
-                number += "одиннадцать"
-            }
-            12 -> {
-                number += "двенадцать"
-            }
-            13 -> {
-                number += "тринадцать"
-            }
-            14 -> {
-                number += "четырнадцать"
-            }
-            15 -> {
-                number += "пятнадцать"
-            }
-            16 -> {
-                number += "шестнадцать"
-            }
-            17 -> {
-                number += "семнадцать"
-            }
-            18 -> {
-                number += "восемнадцать"
-            }
-            else -> number += "девятнадцать"
-        }
-        number += (" тысяч")
-    } else {
-        if ((tensThousands != 0) && (n in 1000..999999)) {
-            when (tensThousands) {
-                2 -> {
-                    number += "двадцать"
-                }
-                3 -> {
-                    number += "тридцать"
-                }
-                4 -> {
-                    number += "сорок"
-                }
-                5 -> {
-                    number += "пятьдесят"
-                }
-                6 -> {
-                    number += "шестьдесят"
-                }
-                7 -> {
-                    number += "семьдесят"
-                }
-                8 -> {
-                    number += "восемьдесят"
-                }
-                else -> number += "девяносто"
-            }
-            number += " "
-        }
-        if (n in 1000..999999) {
-            when (unitsThousands) {
-                1 -> {
-                    number += "одна тысяча"
-                }
-                2 -> {
-                    number += "две тысячи"
-                }
-                3 -> {
-                    number += "три тысячи"
-                }
-                4 -> {
-                    number += "четыре тысячи"
-                }
-                5 -> {
-                    number += "пять тысяч"
-                }
-                6 -> {
-                    number += "шесть тысяч"
-                }
-                7 -> {
-                    number += "семь тысяч"
-                }
-                8 -> {
-                    number += "восемь тысяч"
-                }
+    while (count > 0) {
+        i = if (thousands != 0) thousands else notThousands
+        iHundreds = i / 100
+        if (iHundreds != 0) {
+            when (iHundreds) {
                 9 -> {
-                    number += "девять тысяч"
-                }
-                else -> number += "тысяч"
-            }
-        }
-    }
-    if ((hundreds != 0 || tens != 0 || units != 0) && n >= 1000)
-        number += " "
-    if (hundreds != 0) {
-        when (hundreds) {
-            9 -> {
-                number += "девятьсот"
-            }
-            8 -> {
-                number += "восемьсот"
-            }
-            7 -> {
-                number += "семьсот"
-            }
-            6 -> {
-                number += "шестьсот"
-            }
-            5 -> {
-                number += "пятьсот"
-            }
-            4 -> {
-                number += "четыреста"
-            }
-            3 -> {
-                number += "триста"
-            }
-            2 -> {
-                number += "двести"
-            }
-            else -> number += "сто"
-        }
-        number += " "
-    }
-    if (extraTens in 10..19) {
-        when (extraTens) {
-            10 -> {
-                number += "десять"
-            }
-            11 -> {
-                number += "одиннадцать"
-            }
-            12 -> {
-                number += "двенадцать"
-            }
-            13 -> {
-                number += "тринадцать"
-            }
-            14 -> {
-                number += "четырнадцать"
-            }
-            15 -> {
-                number += "пятнадцать"
-            }
-            16 -> {
-                number += "шестнадцать"
-            }
-            17 -> {
-                number += "семнадцать"
-            }
-            18 -> {
-                number += "восемнадцать"
-            }
-            else -> number += "девятнадцать"
-        }
-    } else {
-        if (tens != 0) {
-            when (tens) {
-                2 -> {
-                    number += "двадцать"
-                }
-                3 -> {
-                    number += "тридцать"
-                }
-                4 -> {
-                    number += "сорок"
-                }
-                5 -> {
-                    number += "пятьдесят"
-                }
-                6 -> {
-                    number += "шестьдесят"
-                }
-                7 -> {
-                    number += "семьдесят"
+                    number.append("девятьсот")
                 }
                 8 -> {
-                    number += "восемьдесят"
-                }
-                else -> number += "девяносто"
-            }
-            if (units != 0)
-                number += " "
-        }
-        if (units != 0) {
-            when (units) {
-                1 -> {
-                    number += "один"
-                }
-                2 -> {
-                    number += "два"
-                }
-                3 -> {
-                    number += "три"
-                }
-                4 -> {
-                    number += "четыре"
-                }
-                5 -> {
-                    number += "пять"
-                }
-                6 -> {
-                    number += "шесть"
+                    number.append("восемьсот")
                 }
                 7 -> {
-                    number += "семь"
+                    number.append("семьсот")
                 }
-                8 -> {
-                    number += "восемь"
+                6 -> {
+                    number.append("шестьсот")
                 }
-                else -> number += "девять"
+                5 -> {
+                    number.append("пятьсот")
+                }
+                4 -> {
+                    number.append("четыреста")
+                }
+                3 -> {
+                    number.append("триста")
+                }
+                2 -> {
+                    number.append("двести")
+                }
+                else -> number.append("сто")
+            }
+            if ((i / 10 % 10 != 0) || (i % 10 != 0)) number.append(" ") else {
+                number.append(" тысяч")
+                if (notThousands != 0) number.append(" ")
             }
         }
+        count -= 1
+        if (i % 100 in 10..19) {
+            iTens = i % 100
+            when (iTens) {
+                10 -> {
+                    number.append("десять")
+                }
+                11 -> {
+                    number.append("одиннадцать")
+                }
+                12 -> {
+                    number.append("двенадцать")
+                }
+                13 -> {
+                    number.append("тринадцать")
+                }
+                14 -> {
+                    number.append("четырнадцать")
+                }
+                15 -> {
+                    number.append("пятнадцать")
+                }
+                16 -> {
+                    number.append("шестнадцать")
+                }
+                17 -> {
+                    number.append("семнадцать")
+                }
+                18 -> {
+                    number.append("восемнадцать")
+                }
+                else -> number.append("девятнадцать")
+            }
+            if (thousands != 0) {
+                number.append(" тысяч")
+                if (notThousands != 0) number.append(" ")
+            }
+            count -= 2
+        } else {
+            iTens = i % 100 / 10
+            if (iTens != 0) {
+                when (iTens) {
+                    2 -> {
+                        number.append("двадцать")
+                    }
+                    3 -> {
+                        number.append("тридцать")
+                    }
+                    4 -> {
+                        number.append("сорок")
+                    }
+                    5 -> {
+                        number.append("пятьдесят")
+                    }
+                    6 -> {
+                        number.append("шестьдесят")
+                    }
+                    7 -> {
+                        number.append("семьдесят")
+                    }
+                    8 -> {
+                        number.append("восемьдесят")
+                    }
+                    else -> number.append("девяносто")
+                }
+                if (i % 10 != 0) number.append(" ")
+            }
+            count -= 1
+            iUnits = i % 10
+            if (iUnits != 0) {
+                if (thousands != 0) {
+                    when (iUnits) {
+                        1 -> {
+                            number.append("одна тысяча")
+                        }
+                        2 -> {
+                            number.append("две тысячи")
+                        }
+                        3 -> {
+                            number.append("три тысячи")
+                        }
+                        4 -> {
+                            number.append("четыре тысячи")
+                        }
+                        5 -> {
+                            number.append("пять тысяч")
+                        }
+                        6 -> {
+                            number.append("шесть тысяч")
+                        }
+                        7 -> {
+                            number.append("семь тысяч")
+                        }
+                        8 -> {
+                            number.append("восемь тысяч")
+                        }
+                        9 -> {
+                            number.append("девять тысяч")
+                        }
+                        else -> number.append("тысяч")
+                    }
+                    if (notThousands != 0) number.append(" ")
+                } else {
+                    when (iUnits) {
+                        1 -> {
+                            number.append("один")
+                        }
+                        2 -> {
+                            number.append("два")
+                        }
+                        3 -> {
+                            number.append("три")
+                        }
+                        4 -> {
+                            number.append("четыре")
+                        }
+                        5 -> {
+                            number.append("пять")
+                        }
+                        6 -> {
+                            number.append("шесть")
+                        }
+                        7 -> {
+                            number.append("семь")
+                        }
+                        8 -> {
+                            number.append("восемь")
+                        }
+                        else -> number.append("девять")
+                    }
+                }
+            }
+            count -= 1
+        }
+        thousands = 0
     }
-    return (number)
+    return number.toString()
+}
+
+fun main() {
+    print(123 % 100 / 10)
 }
