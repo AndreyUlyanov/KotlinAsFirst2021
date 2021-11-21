@@ -5,6 +5,7 @@ package lesson3.task1
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
+
 // Урок 3: циклы
 // Максимальное количество баллов = 9
 // Рекомендуемое количество баллов = 7
@@ -240,6 +241,7 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
+
 
 /**
  * Сложная (5 баллов)

@@ -3,6 +3,7 @@
 package lesson4.task1
 
 import lesson1.task1.discriminant
+import lesson3.task1.revert
 import kotlin.math.sqrt
 
 // Урок 4: списки

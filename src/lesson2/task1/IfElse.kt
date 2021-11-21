@@ -116,18 +116,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    val menace2: Int = when {
-        (kingX == rookX2) || (kingY == rookY2) -> 1
-        else -> 0
-    }
-    val menace1: Int = when {
-        (kingX == rookX1) || (kingY == rookY1) -> 1
-        else -> 0
-    }
+    val menace1: Boolean = (kingX == rookX1) || (kingY == rookY1)
+    val menace2: Boolean = (kingX == rookX2) || (kingY == rookY2)
     return when {
-        (menace1 == 1) && (menace2 == 0) -> 1
-        (menace1 == 0) && (menace2 == 1) -> 2
-        (menace1 == 1) && (menace2 == 1) -> 3
+        menace1 && !menace2 -> 1
+        !menace1 && menace2 -> 2
+        menace1 && menace2 -> 3
         else -> 0
     }
 }
@@ -147,13 +141,14 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    return if (((kingX == rookX) || (kingY == rookY)) && (abs(kingX - bishopX) != abs(kingY - bishopY))) {
-        1
-    } else if ((abs(kingX - bishopX) == abs(kingY - bishopY)) && ((kingX != rookX) && (kingY != rookY))) {
-        2
-    } else if (((kingX == rookX) || (kingY == rookY)) && (abs(kingX - bishopX) == abs(kingY - bishopY))) {
-        3
-    } else 0
+    val menace1: Boolean = (kingX == rookX) || (kingY == rookY)
+    val menace2: Boolean = abs(kingX - bishopX) == abs(kingY - bishopY)
+    return when {
+        menace1 && !menace2 -> 1
+        !menace1 && menace2 -> 2
+        menace1 && menace2 -> 3
+        else -> 0
+    }
 }
 
 /**
