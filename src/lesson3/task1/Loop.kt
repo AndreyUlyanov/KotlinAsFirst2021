@@ -3,6 +3,7 @@
 package lesson3.task1
 
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
@@ -125,16 +126,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var divider = 1
-    for (i in n - 1 downTo sqrt(n.toDouble()).roundToInt()) {
-        if (n % i == 0) {
-            divider = i
-            break
-        } else continue
-    }
-    return divider
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая (2 балла)
@@ -240,8 +232,24 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
-
+fun squareSequenceDigit(n: Int): Int {
+    var sequenceLong = 0
+    var result = 0
+    var i = 0
+    var sqrt = 0
+    while (sequenceLong < n) {
+        i += 1
+        sqrt = i * i
+        sequenceLong += digitNumber(sqrt)
+    }
+    result = if (sequenceLong == n) {
+        sqrt % 10
+    } else {
+        ((sqrt / 10.0.pow(sequenceLong - n)).roundToInt())
+    }
+    if (result > 9) result %= 10
+    return result
+}
 
 /**
  * Сложная (5 баллов)
@@ -252,4 +260,21 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var sequenceLong = 0
+    var result = 0
+    var i = 0
+    var fib = 0
+    while (sequenceLong < n) {
+        i += 1
+        fib = fib(i)
+        sequenceLong += digitNumber(fib)
+    }
+    result = if (sequenceLong == n) {
+        fib % 10
+    } else {
+        ((fib / 10.0.pow(sequenceLong - n)).roundToInt())
+    }
+    if (result > 9) result %= 10
+    return result
+}
