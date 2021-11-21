@@ -270,11 +270,13 @@ fun fibSequenceDigit(n: Int): Int {
         fib = fib(i)
         sequenceLong += digitNumber(fib)
     }
-    result = if (sequenceLong == n) {
-        fib % 10
+    if (sequenceLong == n) {
+        result = fib % 10
     } else {
-        ((fib / 10.0.pow(sequenceLong - n)).roundToInt())
+        result = (fib / 10.0.pow(sequenceLong - n)).toInt()
+        if (result > 9) {
+            result %= 10
+        }
     }
-    if (result > 9) result %= 10
     return result
 }
