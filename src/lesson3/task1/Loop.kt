@@ -4,7 +4,6 @@ package lesson3.task1
 
 import kotlin.math.abs
 import kotlin.math.pow
-import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -242,12 +241,14 @@ fun squareSequenceDigit(n: Int): Int {
         sqrt = i * i
         sequenceLong += digitNumber(sqrt)
     }
-    result = if (sequenceLong == n) {
-        sqrt % 10
+    if (sequenceLong == n) {
+        result = sqrt % 10
     } else {
-        ((sqrt / 10.0.pow(sequenceLong - n)).roundToInt())
+        result = (sqrt / 10.0.pow(sequenceLong - n)).toInt()
+        if (result > 9) {
+            result %= 10
+        }
     }
-    if (result > 9) result %= 10
     return result
 }
 
